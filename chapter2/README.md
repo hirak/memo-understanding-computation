@@ -24,7 +24,7 @@
 SIMPLEという架空言語を考える。
 SIMPLEの構成要素、Number、Add、MultiplyをRubyのクラスとして表現してみる。
 
-[SIMPLE1.rb](SIMPLE1.rb)
+[SIMPLE.rb](SIMPLE.rb)
 
 これらのクラスを使い、手動で抽象構文木を作ることができる。
 
@@ -38,7 +38,7 @@ Add.new(
 実行してみるとこの通り。
 
 ```bash
-irb(main):001:0> require "./SIMPLE1.rb"
+irb(main):001:0> require "./SIMPLE.rb"
 => true
 irb(main):002:0> Add.new(Multiply.new(Number.new(1), Number.new(2)), Multiply.new(Number.new(3), Number.new(4)))
 => ≪1 * 2 + 3 * 4≫
@@ -64,7 +64,7 @@ AddとMultiplyは、左辺と右辺をそれぞれ簡約していき、reducible
 
 ```ruby
 $ irb
-irb(main):001:0> require './SIMPLE1.rb'
+irb(main):001:0> require './SIMPLE.rb'
 => true
 irb(main):002:0> ex = Add.new(Multiply.new(Number.new(1), Number.new(2)), Multiply.new(Number.new(3), Number.new(4)))
 => ≪1 * 2 + 3 * 4≫
