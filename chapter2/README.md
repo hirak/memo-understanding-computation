@@ -56,7 +56,7 @@ SIMPLEはスモールステップで構文を繰り返し簡約(reduce)するこ
 3. `14`
 
 Number, Add, Multiplyにそれぞれ簡約可能であるかを示すメソッド`#reducible?`を追加する。
-[reducible追加](e6942b8d27c3787a4d0eaf0ed6e0c9e519f587e3)
+[reducible追加](https://github.com/hirak/memo-understanding-computation/commit/e6942b8d27c3787a4d0eaf0ed6e0c9e519f587e3)
 
 実際にreduceメソッドを作ってみる。
 
@@ -87,4 +87,4 @@ irb(main):009:0> ex.reducible?
 reducible?とreduceを繰り返す部分を仮想機械としてまとめてみる。
 
 Machineというクラスを作る。
-[Machineクラス作成](21de4b01fe347deae735fb75ec92e0215e850d0b)
+[Machineクラス作成](https://github.com/hirak/memo-understanding-computation/commit/21de4b01fe347deae735fb75ec92e0215e850d0b)
