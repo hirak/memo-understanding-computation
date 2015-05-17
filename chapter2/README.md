@@ -45,3 +45,19 @@ irb(main):002:0> Add.new(Multiply.new(Number.new(1), Number.new(2)), Multiply.ne
 ```
 
 `1*2+3*4`相当の構文を表すことができた。
+
+#### 簡約
+
+SIMPLEはスモールステップで構文を繰り返し簡約(reduce)することで評価してゆく。
+
+1. `1*2 + 3*4`
+2. `2   + 3*4`
+3. `2   + 12`
+3. `14`
+
+Number, Add, Multiplyにそれぞれ簡約可能であるかを示すメソッド`#reducible?`を追加する。
+(#e6942b8d27c3787a4d0eaf0ed6e0c9e519f587e3)
+
+実際にreduceメソッドを作ってみる。
+
+AddとMultiplyは、左辺と右辺をそれぞれ簡約していき、reducible?がfalseだったら実際の簡約を実行する。
