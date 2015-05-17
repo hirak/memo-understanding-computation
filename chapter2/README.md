@@ -56,7 +56,7 @@ SIMPLEはスモールステップで構文を繰り返し簡約(reduce)するこ
 3. `14`
 
 Number, Add, Multiplyにそれぞれ簡約可能であるかを示すメソッド`#reducible?`を追加する。
-(#e6942b8d27c3787a4d0eaf0ed6e0c9e519f587e3)
+[reducible追加](e6942b8d27c3787a4d0eaf0ed6e0c9e519f587e3)
 
 実際にreduceメソッドを作ってみる。
 
@@ -83,3 +83,8 @@ irb(main):008:0> ex = ex.reduce
 irb(main):009:0> ex.reducible?
 => false
 ```
+
+reducible?とreduceを繰り返す部分を仮想機械としてまとめてみる。
+
+Machineというクラスを作る。
+[Machineクラス作成](21de4b01fe347deae735fb75ec92e0215e850d0b)
