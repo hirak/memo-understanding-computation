@@ -35,3 +35,13 @@ Add.new(
 )
 ```
 
+実行してみるとこの通り。
+
+```bash
+irb(main):001:0> require "./SIMPLE1.rb"
+=> true
+irb(main):002:0> Add.new(Multiply.new(Number.new(1), Number.new(2)), Multiply.new(Number.new(3), Number.new(4)))
+=> ≪1 * 2 + 3 * 4≫
+```
+
+`1*2+3*4`相当の構文を表すことができた。
