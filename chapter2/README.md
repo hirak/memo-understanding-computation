@@ -46,7 +46,7 @@ irb(main):002:0> Add.new(Multiply.new(Number.new(1), Number.new(2)), Multiply.ne
 
 `1*2+3*4`相当の構文を表すことができた。
 
-#### 簡約
+#### 簡約(reduce)
 
 SIMPLEはスモールステップで構文を繰り返し簡約(reduce)することで評価してゆく。
 
@@ -61,3 +61,25 @@ Number, Add, Multiplyにそれぞれ簡約可能であるかを示すメソッ�
 実際にreduceメソッドを作ってみる。
 
 AddとMultiplyは、左辺と右辺をそれぞれ簡約していき、reducible?がfalseだったら実際の簡約を実行する。
+
+```ruby
+$ irb
+irb(main):001:0> require './SIMPLE1.rb'
+=> true
+irb(main):002:0> ex = Add.new(Multiply.new(Number.new(1), Number.new(2)), Multiply.new(Number.new(3), Number.new(4)))
+=> ≪1 * 2 + 3 * 4≫
+irb(main):003:0> ex.reducible?
+=> true
+irb(main):004:0> ex = ex.reduce
+=> ≪2 + 3 * 4≫
+irb(main):005:0> ex.reducible?
+=> true
+irb(main):006:0> ex = ex.reduce
+=> ≪2 + 12≫
+irb(main):007:0> ex.reducible?
+=> true
+irb(main):008:0> ex = ex.reduce
+=> ≪14≫
+irb(main):009:0> ex.reducible?
+=> false
+```
