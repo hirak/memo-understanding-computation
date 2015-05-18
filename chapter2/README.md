@@ -88,3 +88,5 @@ reducible?とreduceを繰り返す部分を仮想機械としてまとめてみ�
 
 Machineというクラスを作る。
 [Machineクラス作成](https://github.com/hirak/memo-understanding-computation/commit/21de4b01fe347deae735fb75ec92e0215e850d0b)
+
+Machine.newに対して抽象構文木を渡し、.runすると自動でreduceを繰り返すようになる。
