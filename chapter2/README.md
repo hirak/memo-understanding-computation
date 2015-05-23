@@ -186,3 +186,75 @@ do-nothing, {:x=>《true》, :y=>≪1≫}
 ```
 
 ちなみに、else句(alternative)のないif分が必要ならば、elseにdo-nothingを指定することで対処が可能になっている。
+
+
+さらに、文なのだから、複数の式や文をつなげて実行できるようにすると便利だ。複文を表す「;」シーケンス(sequence)の誕生である。
+`x = 1 + 1; y = x + 3`
+この規則は少し複雑になる。
+
+- 最初の文がdo-nothingの場合、次の文ともとのままのに簡約する。
+- 最初の文がdo-nothingでない場合、最初の文をまず簡約し、新しいシーケンス文にして、さらに簡約された環境が得られる。
+
+二つの式しかまとめられないが、入れ子になればよいので能力的には無限個の文をまとめることができる。
+https://github.com/hirak/memo-understanding-computation/commit/b6c96c71be99038ecba3ae25954654194334813e
+
+```ruby
+irb(main):002:0> Machine.new(
+irb(main):003:1*   Sequence.new(
+irb(main):004:2*     Assign.new(:x, Add.new(Number.new(1), Number.new(2))),
+irb(main):005:2*     Assign.new(:y, Add.new(Variable.new(:x), Number.new(3)))
+irb(main):006:2>   ),
+irb(main):007:1*   {}
+irb(main):008:1> ).run
+x = 1 + 2; y = x + 3, {}
+x = 3; y = x + 3, {}
+do-nothing; y = x + 3, {:x=>≪3≫}
+y = x + 3, {:x=>≪3≫}
+y = 3 + 3, {:x=>≪3≫}
+y = 6, {:x=>≪3≫}
+do-nothing, {:x=>≪3≫, :y=>≪6≫}
+=> nil
+```
+
+最後に、ループ構文whileを考える。whileは条件(condition)式と、本体(body)と呼ばれる文がある。
+スモールステップ意味論においては直接実行するのではなく、シーケンスを使ってwhileを一段展開する。
+
+1. while (condition) { body }
+2. if condition { body; while (condition) { body } } else { do-nothing }
+
+これを繰り返すと、while文がひたすら展開されて、最終的には平べったくなる。
+
+
+```ruby
+irb(main):002:0> Machine.new(
+irb(main):003:1*   While.new(
+irb(main):004:2*     LessThan.new(Variable.new(:x), Number.new(5)),
+irb(main):005:2*     Assign.new(:x, Multiply.new(Variable.new(:x), Number.new(3)))
+irb(main):006:2> ),
+irb(main):007:1* {x: Number.new(1)}
+irb(main):008:1> ).run
+while (x < 5) { x = x * 3 }, {:x=>≪1≫}
+if (x < 5) { x = x * 3; while (x < 5) { x = x * 3 } } else { do-nothing }, {:x=>≪1≫}
+if (1 < 5) { x = x * 3; while (x < 5) { x = x * 3 } } else { do-nothing }, {:x=>≪1≫}
+if (true) { x = x * 3; while (x < 5) { x = x * 3 } } else { do-nothing }, {:x=>≪1≫}
+x = x * 3; while (x < 5) { x = x * 3 }, {:x=>≪1≫}
+x = 1 + 3; while (x < 5) { x = x * 3 }, {:x=>≪1≫}
+x = 4; while (x < 5) { x = x * 3 }, {:x=>≪1≫}
+do-nothing; while (x < 5) { x = x * 3 }, {:x=>≪4≫}
+while (x < 5) { x = x * 3 }, {:x=>≪4≫}
+if (x < 5) { x = x * 3; while (x < 5) { x = x * 3 } } else { do-nothing }, {:x=>≪4≫}
+if (4 < 5) { x = x * 3; while (x < 5) { x = x * 3 } } else { do-nothing }, {:x=>≪4≫}
+if (true) { x = x * 3; while (x < 5) { x = x * 3 } } else { do-nothing }, {:x=>≪4≫}
+x = x * 3; while (x < 5) { x = x * 3 }, {:x=>≪4≫}
+x = 4 + 3; while (x < 5) { x = x * 3 }, {:x=>≪4≫}
+x = 7; while (x < 5) { x = x * 3 }, {:x=>≪4≫}
+do-nothing; while (x < 5) { x = x * 3 }, {:x=>≪7≫}
+while (x < 5) { x = x * 3 }, {:x=>≪7≫}
+if (x < 5) { x = x * 3; while (x < 5) { x = x * 3 } } else { do-nothing }, {:x=>≪7≫}
+if (7 < 5) { x = x * 3; while (x < 5) { x = x * 3 } } else { do-nothing }, {:x=>≪7≫}
+if (false) { x = x * 3; while (x < 5) { x = x * 3 } } else { do-nothing }, {:x=>≪7≫}
+do-nothing, {:x=>≪7≫}
+=> nil
+```
+
+while文はif文だったのか。。
