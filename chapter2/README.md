@@ -160,3 +160,29 @@ irb(main):008:0> statement.reducible?
 ```
 
 代入文を簡約してゆくと、最終的にstatementはdo-nothingになって、簡約できなくなり、代入文の評価が終わる。
+
+先ほど定義していた仮想機械はまだ式しか扱えなかった。文を定義し、同じように使えるようにしてみる。
+
+https://github.com/hirak/memo-understanding-computation/commit/7e5334a999bd77ccd01749d6248bfb254f15e850
+
+
+この調子で他の文も作ってみる。
+
+if文は条件(condition)式、帰結(consequence)文、代替(alternative)文の3つが必要になる。
+
+```ruby
+irb(main):002:0> Machine.new(
+irb(main):003:1*   If.new(
+irb(main):004:2*     Variable.new(:x),
+irb(main):005:2*     Assign.new(:y, Number.new(1)),
+irb(main):006:2*     Assign.new(:y, Number.new(2))
+irb(main):007:2>   ),
+irb(main):008:1*   { x: Boolean.new(true) }).run
+if (x) { y = 1 } else { y = 2 }, {:x=>《true》}
+if (true) { y = 1 } else { y = 2 }, {:x=>《true》}
+y = 1, {:x=>《true》}
+do-nothing, {:x=>《true》, :y=>≪1≫}
+=> nil
+```
+
+ちなみに、else句(alternative)のないif分が必要ならば、elseにdo-nothingを指定することで対処が可能になっている。
