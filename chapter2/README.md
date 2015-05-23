@@ -280,3 +280,44 @@ while文はif文だったのか。。
 
 ビッグステップでは文の扱いが簡単になる。変更途中の環境が登場せず、文（環境を変えるもの）のevaluateは変更後の環境をいきなり返すようにすればよい。
 
+```ruby
+irb(main):002:0> statement =
+irb(main):003:0*   While.new(
+irb(main):004:1*   LessThan.new(Variable.new(:x), Number.new(5)),
+irb(main):005:1*   Assign.new(:x, Multiply.new(Variable.new(:x), Number.new(3)))
+irb(main):006:1> )
+=> 《while (x < 5) { x = x * 3 }》
+irb(main):007:0> statement.evaluate({x: Number.new(1)})
+=> {:x=>≪9≫}
+```
+
+### これらは何だったのか
+
+スモールステップ意味論とビッグステップ意味論は、実はインタプリタ(interpreter)の実装になっている。
+つまり、インタプリタを実装することで、未知のプログラミング言語の仕様を記述できたわけだ。
+
+
+
+2.4 表示的意味論
+---------------------
+
+表示的意味論(denotational semantics)では、プログラムをネイティブ言語から別の表現に変換することで意味を記述する。
+
+より低レベルで安定していて理解されている言語に翻訳することで、未知の言語を理解できるようにする。
+
+今回はSIMPLEをrubyに変換することで、表示的意味論のアプローチを執り行う。
+
+各要素に`to_ruby`メソッドを追加する。
+
+SIMPLE -> `to_ruby` -> Rubyとして妥当なプログラムコード -> evalすると、実行できる
+
+```ruby
+irb(main):002:0> Number.new(5).to_ruby
+=> "-> e { 5 }"
+irb(main):003:0> Boolean.new(false).to_ruby
+=> "-> e { false }"
+```
+
+
+
+

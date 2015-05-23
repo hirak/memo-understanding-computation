@@ -1,3 +1,5 @@
+### 操作的意味論：　スモールステップ意味論
+
 class Number < Struct.new(:value)
   def to_s
     value.to_s
@@ -241,7 +243,7 @@ class While < Struct.new(:condition, :body)
   end
 end
 
-##### ビッグステップ意味論
+### 操作的意味論：ビッグステップ意味論
 
 class Number
   def evaluate(environment)
@@ -316,5 +318,38 @@ class While
       when Boolean.new(false)
         environment
     end
+  end
+end
+
+
+### 表示的意味論
+
+class Number
+  def to_ruby
+    "-> e { #{value.inspect} }"
+  end
+end
+
+class Boolean
+  def to_ruby
+    "-> e { #{value.inspect} }"
+  end
+end
+
+class Add
+  def to_ruby
+    "-> e { (#{left.to_ruby}).call(e) + (#{right.to_ruby}).call(e) }"
+  end
+end
+
+class Multiply
+  def to_ruby
+    "-> e { (#{left.to_ruby}).call(e) * (#{right.to_ruby}).call(e) }"
+  end
+end
+
+class LessThan
+  def to_ruby
+    "-> e { (#{left.to_ruby}).call(e) < (#{right.to_ruby}).call(e) }"
   end
 end
