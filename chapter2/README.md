@@ -319,5 +319,19 @@ irb(main):003:0> Boolean.new(false).to_ruby
 ```
 
 
+```ruby
+irb(main):002:0> Add.new(Variable.new(:x), Number.new(1)).to_ruby
+=> "-> e { (-> e { e[:x] }).call(e) + (-> e { 1 }).call(e) }"
+irb(main):003:0> LessThan.new(Add.new(Variable.new(:x), Number.new(1)), Number.new(3)).to_ruby
+=> "-> e { (-> e { (-> e { e[:x] }).call(e) + (-> e { 1 }).call(e) }).call(e) < (-> e { 3 }).call(e) }"
+irb(main):004:0> proc = LessThan.new(Add.new(Variable.new(:x), Number.new(1)), Number.new(3)).to_ruby
+=> "-> e { (-> e { (-> e { e[:x] }).call(e) + (-> e { 1 }).call(e) }).call(e) < (-> e { 3 }).call(e) }"
+irb(main):005:0> environment = {x: 3}
+=> {:x=>3}
+irb(main):006:0> proc = eval(proc)
+=> #<Proc:0x007f7fe9505800$this->(eval):1 (lambda)>
+irb(main):007:0> proc.call(environment)
+=> false
+```
 
-
+rubyのコードなんだけど、翻訳されて出てくる文字列は凄まじいですね。。
