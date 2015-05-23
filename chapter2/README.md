@@ -134,4 +134,29 @@ x + y
 抽象機械の状態を変更することを目的とする、文(statement)というものを作ってみる。
 文は式とは違い、別の式を生成したりしない。一番単純なのはDoNothing - 何もしない文である。
 
-さっき変数(variable)を追加したけれど、あらかじめ環境に定義されているものを読み出すことしかできなかった。代入文はまだどこにも定義されていない。これを追加してみる。
+さっき変数(variable)を追加したけれど、あらかじめ環境に定義されているものを読み出すことしかできなかった。代入はまだどこにも定義されていない。これを追加してみる。
+
+代入(Assign)は、`x = x + 1`の「=」のようなイメージだろうか。右辺を簡約し、その後左辺に示される変数の内容を更新する。また、代入文は代入された値自体を返すようにするのが一般的だ。
+なので変更された後の環境と、戻り値の二つを返す必要がある。今回はRubyなので配列で２つを返すようにしてみた。
+
+```ruby
+$ irb
+irb(main):001:0> require "./SIMPLE.rb"
+=> true
+irb(main):002:0> statement = Assign.new(:x, Add.new(Variable.new(:x), Number.new(1)))
+=> 《x = x + 1》
+irb(main):003:0> environment = { x: Number.new(2) }
+=> {:x=>≪2≫}
+irb(main):004:0> statement.reducible?
+=> true
+irb(main):005:0> statement, environment = statement.reduce(environment)
+=> [《x = 2 + 1》, {:x=>≪2≫}]
+irb(main):006:0> statement, environment = statement.reduce(environment)
+=> [《x = 3》, {:x=>≪2≫}]
+irb(main):007:0> statement, environment = statement.reduce(environment)
+=> [《do-nothing》, {:x=>≪3≫}]
+irb(main):008:0> statement.reducible?
+=> false
+```
+
+代入文を簡約してゆくと、最終的にstatementはdo-nothingになって、簡約できなくなり、代入文の評価が終わる。
