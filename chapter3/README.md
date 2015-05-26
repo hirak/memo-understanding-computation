@@ -17,3 +17,21 @@ oO(正規表現みたいな話かな？)
 まずは、入力ストリームに対して決定的である機械を考える。これを決定性有限オートマトンと呼ぶ。DFA: Deterministic Finite Automaton
 
 常に次に進むべき情報は一つに定まるようになっているのが特徴。(どっちの状態にも遷移できるから迷う、みたいなことが起きえないように作ってある）
+
+
+```ruby
+irb(main):001:0> require './automaton.rb'
+=> true
+irb(main):002:0> rulebook = DFARulebook.new([
+irb(main):003:2* FARule.new(1, 'a', 2), FARule.new(1, 'b', 1),
+irb(main):004:2* FARule.new(2, 'a', 2), FARule.new(2, 'b', 3),
+irb(main):005:2* FARule.new(3, 'a', 3), FARule.new(3, 'b', 3)
+irb(main):006:2> ])
+=> #<struct DFARulebook rules=[#<FARule 1 --a--> 2>, #<FARule 1 --b--> 1>, #<FARule 2 --a--> 2>, #<FARule 2 --b--> 3>, #<FARule 3 --a--> 3>, #<FARule 3 --b--> 3>]>
+irb(main):007:0> rulebook.next_state(1, 'a')
+=> 2
+irb(main):008:0> rulebook.next_state(1, 'b')
+=> 1
+irb(main):009:0> rulebook.next_state(2, 'b')
+=> 3
+```
