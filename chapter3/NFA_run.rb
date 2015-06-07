@@ -16,3 +16,26 @@ puts NFA.new(Set[1], [4], rulebook).accepting?
 
 puts NFA.new(Set[1, 2, 4], [4], rulebook).accepting?
 
+nfa = NFA.new(Set[1], [4], rulebook)
+puts nfa.accepting?
+
+nfa.read_character('b')
+puts nfa.accepting?
+
+nfa.read_character('a')
+puts nfa.accepting?
+
+nfa.read_character('b')
+puts nfa.accepting?
+
+nfa = NFA.new(Set[1], [4], rulebook)
+puts nfa.accepting?
+
+nfa.read_string('bbbbb')
+puts nfa.accepting?
+
+puts '----------NFADesign------------'
+nfa_design = NFADesign.new(1, [4], rulebook)
+puts nfa_design.accepts?('bab')
+puts nfa_design.accepts?('bbbbb')
+puts nfa_design.accepts?('bbabb')
