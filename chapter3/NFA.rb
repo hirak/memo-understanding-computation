@@ -40,3 +40,21 @@ class NFADesign < Struct.new(:start_state, :accept_states, :rulebook)
     NFA.new(Set[start_state], accept_states, rulebook)
   end
 end
+
+class NFARulebook
+  def follow_free_moves(states)
+    more_states = next_states(states, nil)
+
+    if more_states.subset?(states)
+      states
+    else
+      follow_free_moves(states + more_states)
+    end
+  end
+end
+
+class NFA
+  def current_states
+    rulebook.follow_free_moves(super)
+  end
+end
