@@ -70,3 +70,14 @@ pattern =
 
 puts pattern.inspect
 
+
+require 'treetop'
+Treetop.load('pattern')
+
+
+parse_tree = PatternParser.new.parse('(a(|b))*');
+
+pattern = parse_tree.to_ast
+puts pattern.matches? 'abaab'
+puts pattern.matches? 'abba'
+
