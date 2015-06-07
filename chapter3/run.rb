@@ -31,3 +31,11 @@ puts dfa.accepting?
 
 dfa.read_string('baaab')
 puts dfa.accepting?
+
+puts '--------- DFADesign -----------'
+
+dfa_design = DFADesign.new(1, [3], rulebook)
+puts dfa_design.accepts?('a')
+puts dfa_design.accepts?('baa')
+puts dfa_design.accepts?('baba')
+

@@ -31,21 +31,20 @@ DFAをrubyで再現するために、いくつかのクラスを定義する。
   - read_character ...入力から一文字読んで、規則集を調べて、現在の状態を変更する。
   - read_string ...文字列を一気に読み込んで、状態を変更する便利メソッド
 
-```ruby
-irb(main):001:0> require './automaton.rb'
-=> true
-irb(main):002:0> rulebook = DFARulebook.new([
-irb(main):003:2* FARule.new(1, 'a', 2), FARule.new(1, 'b', 1),
-irb(main):004:2* FARule.new(2, 'a', 2), FARule.new(2, 'b', 3),
-irb(main):005:2* FARule.new(3, 'a', 3), FARule.new(3, 'b', 3)
-irb(main):006:2> ])
-=> #<struct DFARulebook rules=[#<FARule 1 --a--> 2>, #<FARule 1 --b--> 1>, #<FARule 2 --a--> 2>, #<FARule 2 --b--> 3>, #<FARule 3 --a--> 3>, #<FARule 3 --b--> 3>]>
-irb(main):007:0> rulebook.next_state(1, 'a')
-=> 2
-irb(main):008:0> rulebook.next_state(1, 'b')
-=> 1
-irb(main):009:0> rulebook.next_state(2, 'b')
-=> 3
-```
 
 実行途中の様子は[run.rb](run.rb)にまとめた。(長いので。。)
+
+
+DFAはそれ自体が状態を持っているので、一度処理させると初期状態から離れてしまう。
+いつでも初期状態のDFAが得られるように、DFADesignという設計書のようなクラスを用意し、.to_dfaでDFAを作れるようにする。(ファクトリ的なもの)
+
+最終的にこんな使い勝手に。
+
+```ruby
+dfa_design = DFADesign.new(1, [3], rulebook)
+puts dfa_design.accepts?('a')
+puts dfa_design.accepts?('baa')
+puts dfa_design.accepts?('baba')
+```
+
+正規表現っぽくなった！
