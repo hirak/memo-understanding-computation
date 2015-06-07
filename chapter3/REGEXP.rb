@@ -73,3 +73,29 @@ class Repeat < Struct.new(:pattern)
     2
   end
 end
+
+
+#-----------------------------------
+
+# emptyは空文字だけを受理するNFAにあたる。
+class Empty
+  def to_nfa_design
+    start_state = Object.new
+    accept_states = [start_state]
+    rulebook = NFARulebook.new([])
+
+    NFADesign.new(start_state, accept_states, rulebook)
+  end
+end
+
+# literalはその文字を読むと受理状態になるNFAに相当する
+class Literal
+  def to_nfa_design
+    start_state = Object.new
+    accept_states = Object.new
+    rule = FARule.new(start_state, character, accept_state)
+    rulebook = NFARulebook.new([rule])
+
+    NFADesign.new(start_state, [accept_state], rulebook)
+  end
+end
