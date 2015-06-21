@@ -34,3 +34,37 @@ dpda.read_string('(()')
 puts dpda.accepting?
 
 puts dpda.current_configuration
+
+puts '---------------freemove--------------'
+
+configuration = PDAConfiguration.new(2, Stack.new(['$']))
+puts configuration
+
+rulebook.follow_free_moves(configuration)
+puts rulebook
+
+puts '---------------)))))-----------------'
+
+dpda = DPDA.new(PDAConfiguration.new(1, Stack.new(['$'])), [1], rulebook)
+
+dpda.read_string('(()(')
+puts dpda.accepting?
+
+puts dpda.current_configuration
+dpda.read_string('))()')
+puts dpda.accepting?
+
+puts dpda.current_configuration
+
+puts '---------------design ---------------'
+dpda_design = DPDADesign.new(1, '$', [1], rulebook)
+puts dpda_design.accepts?('(((((())))))')
+puts dpda_design.accepts?('()()()()(((((()()))))')
+puts dpda_design.accepts?('((()()()()((()()))))(')
+
+puts '-------------design?-----------------'
+dpda = DPDA.new(PDAConfiguration.new(1, Stack.new(['$'])), [1], rulebook)
+dpda.read_string('())')
+puts dpda.current_configuration
+
+#puts dpda_design.accepts?('())')

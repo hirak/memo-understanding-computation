@@ -27,3 +27,42 @@
 1. 入力をaから読み
 2. スタックからbをポップし、
 3. スタックにcdをプッシュする
+
+
+### 4.1.4 シミュレーション
+
+rubyでDPDAをシミュレーションする。
+
+- Stack(:contents) スタック構造
+  - #push(character) 文字をpushした新たなスタックを作って返す
+  - #pop(character) 文字を一つ落とした新たなスタックを作って返す
+  - #top 現在のスタックのトップにある文字を返す。状態は変更しない
+  - #inspect
+- PDAConfiguration(:state, :stack) 状態とスタックを保持する
+  - #stuck 行き詰まり状態を返す
+  - #stuck? 現在行き詰まり状態なのかを返す
+- PDARule(:state, :character, :next_state, :pop_character, :push_characters) 一つの規則を表す
+  - #applies_to?(configuration, character) 与えられたconfと1文字から、この規則が適用できるか判定する。
+  - #follow(configuration) この規則に従う。confを変更した新たなconfを返す。
+  - #next_stack(configuration) 内部向け。次のstackを返す。
+
+- DPDARulebook(:rules) DPDA規則集。PDARuleをまとめたもの。
+  - #next_configuration(configuration, character) 文字を読み取って次のconfを返す。
+  - #rule_for(configuration, character) 内部用。文字から適用可能なruleを探し出す
+  - #applies_to?(configuration, character) 自由移動がないか判定する
+  - #follow_free_moves(configuration) 可能な自由移動がある限り移動する
+
+- DPDA(:current_configuration, :accept_state, :rulebook) 入力から文字を読みながら現在の構成を記録できる
+  - #accpeting? 現在の状態は受理状態か判定する
+  - #read_character(character)
+  - #read_string(string) 文字列を受けて状態およびconfを変更してゆく
+  - #current_configuration 自由移動をしたのちに現在のconfを返す
+  - #next_configuration(character) 適用可能であれば変更し、
+  - #stuck? このDPDAが行き詰ったか調べる
+
+- DPDADesign(:start_state, :bottom_character, :accept_state, :rulebook) 何度でもDPDAを作成できるような設計書
+  - #accepts?(string) この文字列を受理するか？
+  - to_dpda DPDAオブジェクトを作成して返す
+
+
+
