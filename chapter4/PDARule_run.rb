@@ -11,3 +11,16 @@ puts rule.applies_to?(configuration, '(')
 puts '------------------------------'
 
 puts rule.follow(configuration).inspect
+
+puts '------------------------------'
+
+rulebook = DPDARulebook.new([
+  PDARule.new(1, '(', 2, '$', ['b', '$']),
+  PDARule.new(2, '(', 2, 'b', ['b', 'b']),
+  PDARule.new(2, ')', 2, 'b', []),
+  PDARule.new(2, nil, 1, '$', ['$'])
+])
+
+puts configuration = rulebook.next_configuration(configuration, '(')
+puts configuration = rulebook.next_configuration(configuration, '(')
+puts configuration = rulebook.next_configuration(configuration, ')')
