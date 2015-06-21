@@ -1,4 +1,4 @@
-require './Stack.rb'
+require './pda.rb'
 
 stack = Stack.new(%w{a b c d e})
 puts stack.inspect
