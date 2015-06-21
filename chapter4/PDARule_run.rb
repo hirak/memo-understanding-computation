@@ -24,3 +24,13 @@ rulebook = DPDARulebook.new([
 puts configuration = rulebook.next_configuration(configuration, '(')
 puts configuration = rulebook.next_configuration(configuration, '(')
 puts configuration = rulebook.next_configuration(configuration, ')')
+
+puts '---------------DPDA--------------'
+
+dpda = DPDA.new(PDAConfiguration.new(1, Stack.new(['$'])), [1], rulebook)
+puts dpda.accepting?
+
+dpda.read_string('(()')
+puts dpda.accepting?
+
+puts dpda.current_configuration
