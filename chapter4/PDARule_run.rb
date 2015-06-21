@@ -8,3 +8,6 @@ puts configuration.inspect
 
 puts rule.applies_to?(configuration, '(')
 
+puts '------------------------------'
+
+puts rule.follow(configuration).inspect
