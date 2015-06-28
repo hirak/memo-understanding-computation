@@ -1,18 +1,18 @@
 require './pda.rb'
 
 rule = PDARule.new(1, '(', 2, '$', ['b', '$'])
-puts rule.inspect
+p rule
 
 configuration = PDAConfiguration.new(1, Stack.new(['$']))
-puts configuration.inspect
+p configuration
 
-puts rule.applies_to?(configuration, '(')
+p rule.applies_to?(configuration, '(')
 
-puts '------------------------------'
+p '------------------------------'
 
-puts rule.follow(configuration).inspect
+p rule.follow(configuration)
 
-puts '------------------------------'
+p '------------------------------'
 
 rulebook = DPDARulebook.new([
   PDARule.new(1, '(', 2, '$', ['b', '$']),
@@ -21,55 +21,55 @@ rulebook = DPDARulebook.new([
   PDARule.new(2, nil, 1, '$', ['$'])
 ])
 
-puts configuration = rulebook.next_configuration(configuration, '(')
-puts configuration = rulebook.next_configuration(configuration, '(')
-puts configuration = rulebook.next_configuration(configuration, ')')
+p configuration = rulebook.next_configuration(configuration, '(')
+p configuration = rulebook.next_configuration(configuration, '(')
+p configuration = rulebook.next_configuration(configuration, ')')
 
-puts '---------------DPDA--------------'
+p '---------------DPDA--------------'
 
 dpda = DPDA.new(PDAConfiguration.new(1, Stack.new(['$'])), [1], rulebook)
-puts dpda.accepting?
+p dpda.accepting?
 
 dpda.read_string('(()')
-puts dpda.accepting?
+p dpda.accepting?
 
-puts dpda.current_configuration
+p dpda.current_configuration
 
-puts '---------------freemove--------------'
+p '---------------freemove--------------'
 
 configuration = PDAConfiguration.new(2, Stack.new(['$']))
-puts configuration
+p configuration
 
 rulebook.follow_free_moves(configuration)
-puts rulebook
+p rulebook
 
-puts '---------------)))))-----------------'
+p '---------------)))))-----------------'
 
 dpda = DPDA.new(PDAConfiguration.new(1, Stack.new(['$'])), [1], rulebook)
 
 dpda.read_string('(()(')
-puts dpda.accepting?
+p dpda.accepting?
 
-puts dpda.current_configuration
+p dpda.current_configuration
 dpda.read_string('))()')
-puts dpda.accepting?
+p dpda.accepting?
 
-puts dpda.current_configuration
+p dpda.current_configuration
 
-puts '---------------design ---------------'
+p '---------------design ---------------'
 dpda_design = DPDADesign.new(1, '$', [1], rulebook)
-puts dpda_design.accepts?('(((((())))))')
-puts dpda_design.accepts?('()()()()(((((()()))))')
-puts dpda_design.accepts?('((()()()()((()()))))(')
+p dpda_design.accepts?('(((((())))))')
+p dpda_design.accepts?('()()()()(((((()()))))')
+p dpda_design.accepts?('((()()()()((()()))))(')
 
-#puts '-------------design?-----------------'
+#p '-------------design?-----------------'
 #dpda = DPDA.new(PDAConfiguration.new(1, Stack.new(['$'])), [1], rulebook)
 #dpda.read_string('())')
-#puts dpda.current_configuration
+#p dpda.current_configuration
 
-#puts dpda_design.accepts?('())')
+#p dpda_design.accepts?('())')
 #
-puts '-----ab-----'
+p '-----ab-----'
 rulebook = DPDARulebook.new([
   PDARule.new(1, 'a', 2, '$', ['a', '$']),
   PDARule.new(1, 'b', 2, '$', ['b', '$']),
@@ -81,6 +81,6 @@ rulebook = DPDARulebook.new([
 ])
 
 dpda_design = DPDADesign.new(1, '$', [1], rulebook)
-puts dpda_design.accepts?('ababab')
-puts dpda_design.accepts?('bbbaaaab')
-puts dpda_design.accepts?('baa')
+p dpda_design.accepts?('ababab')
+p dpda_design.accepts?('bbbaaaab')
+p dpda_design.accepts?('baa')

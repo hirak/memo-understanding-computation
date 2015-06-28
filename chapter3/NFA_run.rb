@@ -6,42 +6,42 @@ rulebook = NFARulebook.new([
   FARule.new(3, 'a', 4), FARule.new(3, 'b', 4)
 ])
 
-puts rulebook.next_states(Set[1], 'b').inspect
+p rulebook.next_states(Set[1], 'b')
 
-puts rulebook.next_states(Set[1, 2], 'a').inspect
+p rulebook.next_states(Set[1, 2], 'a')
 
-puts rulebook.next_states(Set[1, 3], 'b').inspect
+p rulebook.next_states(Set[1, 3], 'b')
 
-puts NFA.new(Set[1], [4], rulebook).accepting?
+p NFA.new(Set[1], [4], rulebook).accepting?
 
-puts NFA.new(Set[1, 2, 4], [4], rulebook).accepting?
+p NFA.new(Set[1, 2, 4], [4], rulebook).accepting?
 
 nfa = NFA.new(Set[1], [4], rulebook)
-puts nfa.accepting?
+p nfa.accepting?
 
 nfa.read_character('b')
-puts nfa.accepting?
+p nfa.accepting?
 
 nfa.read_character('a')
-puts nfa.accepting?
+p nfa.accepting?
 
 nfa.read_character('b')
-puts nfa.accepting?
+p nfa.accepting?
 
 nfa = NFA.new(Set[1], [4], rulebook)
-puts nfa.accepting?
+p nfa.accepting?
 
 nfa.read_string('bbbbb')
-puts nfa.accepting?
+p nfa.accepting?
 
-puts '----------NFADesign------------'
+p '----------NFADesign------------'
 nfa_design = NFADesign.new(1, [4], rulebook)
-puts nfa_design.accepts?('bab')
-puts nfa_design.accepts?('bbbbb')
-puts nfa_design.accepts?('bbabb')
+p nfa_design.accepts?('bab')
+p nfa_design.accepts?('bbbbb')
+p nfa_design.accepts?('bbabb')
 
 
-puts '----------free move -----------'
+p '----------free move -----------'
 # 2か3の倍数回の連続するaを受理するNFA
 rulebook = NFARulebook.new([
   FARule.new(1, nil, 2), FARule.new(1, nil, 4),
@@ -52,10 +52,10 @@ rulebook = NFARulebook.new([
   FARule.new(6, 'a', 4)
 ])
 
-puts rulebook.next_states(Set[1], nil).inspect
+p rulebook.next_states(Set[1], nil)
 
 nfa_design = NFADesign.new(1, [2,4], rulebook)
-puts nfa_design.accepts?('aa')
-puts nfa_design.accepts?('aaa')
-puts nfa_design.accepts?('aaaaa')
-puts nfa_design.accepts?('aaaaaa')
+p nfa_design.accepts?('aa')
+p nfa_design.accepts?('aaa')
+p nfa_design.accepts?('aaaaa')
+p nfa_design.accepts?('aaaaaa')

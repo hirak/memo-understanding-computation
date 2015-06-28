@@ -29,9 +29,9 @@ rulebook = NPDARulebook.new([
 #puts npda.accepting?
 
 
-puts '------------------------------'
+p '------------------------------'
 
 npda_design = NPDADesign.new(1, '$', [3], rulebook)
 
-puts npda_design.accepts?('aba')
-puts npda_design.accepts?('babbaabbab')
+p npda_design.accepts?('aba')
+p npda_design.accepts?('babbaabbab')

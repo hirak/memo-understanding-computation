@@ -7,59 +7,59 @@ pattern = Repeat.new(
   )
 )
 
-puts pattern.inspect
+p pattern
 
-puts '---------------------'
+p '---------------------'
 
 nfa_design = Empty.new.to_nfa_design
 
-puts nfa_design.accepts?('')
-puts nfa_design.accepts?('a')
+p nfa_design.accepts?('')
+p nfa_design.accepts?('a')
 
 nfa_design = Literal.new('a').to_nfa_design
 
-puts nfa_design.accepts?('')
-puts nfa_design.accepts?('a')
-puts nfa_design.accepts?('b')
+p nfa_design.accepts?('')
+p nfa_design.accepts?('a')
+p nfa_design.accepts?('b')
 
-puts '--------matches---------'
-puts Empty.new.matches?('a')
-puts Literal.new('a').matches?('a')
+p '--------matches---------'
+p Empty.new.matches?('a')
+p Literal.new('a').matches?('a')
 
-puts '------- Concatenate ------------'
+p '------- Concatenate ------------'
 pattern = Concatenate.new(
   Literal.new('a'),
   Concatenate.new(Literal.new('b'), Literal.new('c'))
 )
 
-puts pattern.inspect
+p pattern
 
-puts pattern.matches?('a')
-puts pattern.matches?('ab')
-puts pattern.matches?('abc')
+p pattern.matches?('a')
+p pattern.matches?('ab')
+p pattern.matches?('abc')
 
 
-puts '------- Choose ----------------'
+p '------- Choose ----------------'
 
 pattern = Choose.new(Literal.new('a'), Literal.new('b'))
-puts pattern.inspect
+p pattern
 
-puts pattern.matches? 'a'
-puts pattern.matches? 'b'
-puts pattern.matches? 'c'
+p pattern.matches? 'a'
+p pattern.matches? 'b'
+p pattern.matches? 'c'
 
 
-puts '------- Repeat --------'
+p '------- Repeat --------'
 
 pattern = Repeat.new(Literal.new('a'))
-puts pattern.inspect
+p pattern
 
-puts pattern.matches? ''
-puts pattern.matches? 'a'
-puts pattern.matches? 'aaaa'
-puts pattern.matches? 'b'
+p pattern.matches? ''
+p pattern.matches? 'a'
+p pattern.matches? 'aaaa'
+p pattern.matches? 'b'
 
-puts '------- 複雑なパターン -------------'
+p '------- 複雑なパターン -------------'
 pattern =
   Repeat.new(
     Concatenate.new(
@@ -68,7 +68,7 @@ pattern =
     )
 )
 
-puts pattern.inspect
+p pattern
 
 
 require 'treetop'
@@ -78,6 +78,6 @@ Treetop.load('pattern')
 parse_tree = PatternParser.new.parse('(a(|b))*');
 
 pattern = parse_tree.to_ast
-puts pattern.matches? 'abaab'
-puts pattern.matches? 'abba'
+p pattern.matches? 'abaab'
+p pattern.matches? 'abba'
 

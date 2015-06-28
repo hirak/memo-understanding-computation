@@ -8,41 +8,41 @@ rulebook = NFARulebook.new([
 
 nfa_design = NFADesign.new(1, [3], rulebook)
 
-puts nfa_design.to_nfa.current_states.inspect
+p nfa_design.to_nfa.current_states
 
-puts nfa_design.to_nfa(Set[2]).current_states.inspect
+p nfa_design.to_nfa(Set[2]).current_states
 
-puts nfa_design.to_nfa(Set[3]).current_states.inspect
+p nfa_design.to_nfa(Set[3]).current_states
 
 nfa = nfa_design.to_nfa(Set[2, 3])
-puts nfa.inspect
+p nfa
 
 nfa.read_character('b')
-puts nfa.current_states.inspect
+p nfa.current_states
 
-puts '------------ Simulation --------------'
+p '------------ Simulation --------------'
 simulation = NFASimulation.new(nfa_design)
-puts simulation.next_state(Set[1, 2], 'a').inspect
-puts simulation.next_state(Set[1, 2], 'b').inspect
-puts simulation.next_state(Set[3, 2], 'b').inspect
-puts simulation.next_state(Set[1, 3, 2], 'b').inspect
-puts simulation.next_state(Set[1, 3, 2], 'a').inspect
+p simulation.next_state(Set[1, 2], 'a')
+p simulation.next_state(Set[1, 2], 'b')
+p simulation.next_state(Set[3, 2], 'b')
+p simulation.next_state(Set[1, 3, 2], 'b')
+p simulation.next_state(Set[1, 3, 2], 'a')
 
 
-puts rulebook.alphabet.inspect
-puts simulation.rules_for(Set[1, 2]).inspect
-puts simulation.rules_for(Set[3, 2]).inspect
+p rulebook.alphabet
+p simulation.rules_for(Set[1, 2])
+p simulation.rules_for(Set[3, 2])
 
 start_state = nfa_design.to_nfa.current_states
 
-puts simulation.discover_states_and_rules(Set[start_state]).inspect
+p simulation.discover_states_and_rules(Set[start_state])
 
 
-puts '------------trans--------------'
+p '------------trans--------------'
 
 dfa_design = simulation.to_dfa_design
-puts dfa_design.inspect
+p dfa_design
 
-puts dfa_design.accepts?('aaa')
-puts dfa_design.accepts?('aab')
-puts dfa_design.accepts?('bbbabb')
+p dfa_design.accepts?('aaa')
+p dfa_design.accepts?('aab')
+p dfa_design.accepts?('bbbabb')
