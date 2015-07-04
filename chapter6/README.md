@@ -91,3 +91,9 @@ end
 `true`と`false`は2つの選択肢を引数として渡し、1番目と2番目の選択肢のどちらかを選ぶコードとして実装する。
 
 - [bool.rb](bool.rb)を参照。
+
+### 6.1.5 述語
+
+`Fixnum#zero?`をprocベースにしたものを実装する。
+
+- [is_zero.rb](is_zero.rb)を参照。
