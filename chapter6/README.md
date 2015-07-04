@@ -97,3 +97,9 @@ end
 `Fixnum#zero?`をprocベースにしたものを実装する。
 
 - [is_zero.rb](is_zero.rb)を参照。
+
+### 6.1.6 ペア
+
+配列を作るための要素として、二つの値を保持するpairという概念を追加する。
+
+- [pair.rb](pair.rb)を参照。
