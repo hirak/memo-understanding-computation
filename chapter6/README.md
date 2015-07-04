@@ -42,3 +42,37 @@ p myproc.(12) #17
 ```
 
 今回の教科書では、 `-> x { x }` 形式の宣言と、 `myproc[10]` 形式の呼び出しを使っている。
+
+### FizzBuzzをラムダ計算で書く
+
+```ruby
+(1..100).each do |n|
+  if (n % 15).zero?
+    puts 'FizzBuzz'
+  elsif (n % 3).zero?
+    puts 'Fizz'
+  elsif (n % 5).zero?
+    puts 'Buzz'
+  else
+    puts n.to_s
+  end
+end
+```
+
+これをラムダ計算にひたすら翻訳する、という作業をしてみる。putsはI/Oを伴ってしまうので、簡単のために省くことにする。
+
+```ruby
+(1..100).map do |n|
+  if (n % 15).zero?
+    'FizzBuzz'
+  elsif (n % 3).zero?
+    'Fizz'
+  elsif (n % 5).zero?
+    'Buzz'
+  else
+    n.to_s
+  end
+end
+```
+
+ここから、動かないコードに置き換えながら進めるので、プログラムは分割して書いていくことにする。
