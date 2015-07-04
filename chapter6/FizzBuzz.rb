@@ -1,9 +1,11 @@
-(1..100).map do |n|
-  if (n % 15).zero?
+require './number'
+
+(ONE..HUNDRED).map do |n|
+  if (n % FIFTEEN).zero?
     'FizzBuzz'
-  elsif (n % 3).zero?
+  elsif (n % THREE).zero?
     'Fizz'
-  elsif (n % 5).zero?
+  elsif (n % FIVE).zero?
     'Buzz'
   else
     n.to_s
