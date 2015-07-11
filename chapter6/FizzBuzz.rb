@@ -1,14 +1,18 @@
 require './number'
+require './bool'
+require './is_zero'
+require './pair'
+require './calc'
 
 (ONE..HUNDRED).map do |n|
-  if (n % FIFTEEN).zero?
+  IF[IS_ZERO[MOD[n][FIFTEEN]]][
     'FizzBuzz'
-  elsif (n % THREE).zero?
+  ][IF[IS_ZERO[MOD[n][THREE]]][
     'Fizz'
-  elsif (n % FIVE).zero?
+  ][IF[IS_ZERO[MOD[n][FIVE]]][
     'Buzz'
-  else
+  ][
     n.to_s
-  end
+  ]]]
 end
 
