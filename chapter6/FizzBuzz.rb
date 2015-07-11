@@ -5,7 +5,7 @@ require './pair'
 require './calc'
 require './list'
 
-RANGE[ONE][HUNDRED].map do |n|
+MAP[RANGE[ONE][HUNDRED]][-> n {
   IF[IS_ZERO[MOD[n][FIFTEEN]]][
     'FizzBuzz'
   ][IF[IS_ZERO[MOD[n][THREE]]][
@@ -15,5 +15,5 @@ RANGE[ONE][HUNDRED].map do |n|
   ][
     n.to_s
   ]]]
-end
+}]
 
