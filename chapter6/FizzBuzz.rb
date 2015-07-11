@@ -5,8 +5,9 @@ require './pair'
 require './calc'
 require './list'
 require './string'
+require './to_digits'
 
-MAP[RANGE[ONE][HUNDRED]][-> n {
+solution = MAP[RANGE[ONE][HUNDRED]][-> n {
   IF[IS_ZERO[MOD[n][FIFTEEN]]][
     FIZZBUZZ
   ][IF[IS_ZERO[MOD[n][THREE]]][
@@ -14,7 +15,11 @@ MAP[RANGE[ONE][HUNDRED]][-> n {
   ][IF[IS_ZERO[MOD[n][FIVE]]][
     BUZZ
   ][
-    n.to_s
+    TO_DIGITS[n]
   ]]]
 }]
+
+to_array(solution).each do |p|
+  puts to_string(p)
+end
 
