@@ -3,8 +3,9 @@ require './bool'
 require './is_zero'
 require './pair'
 require './calc'
+require './list'
 
-(ONE..HUNDRED).map do |n|
+RANGE[ONE][HUNDRED].map do |n|
   IF[IS_ZERO[MOD[n][FIFTEEN]]][
     'FizzBuzz'
   ][IF[IS_ZERO[MOD[n][THREE]]][
