@@ -25,3 +25,9 @@ p '-------------------------------'
 
 my_range = RANGE[ONE][FIVE]
 p to_array(my_range).map{ |p| to_integer(p) }
+
+p to_integer(FOLD[RANGE[ONE][FIVE]][ZERO][ADD])
+p to_integer(FOLD[RANGE[ONE][FIVE]][ONE][MULTIPLY])
+
+my_list = MAP[RANGE[ONE][FIVE]][INCREMENT]
+p to_array(my_list).map { |p| to_integer p }

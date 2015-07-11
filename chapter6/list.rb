@@ -30,3 +30,23 @@ RANGE =
       ]
     } }
   }]
+
+FOLD =
+  Z[-> f {
+    -> l { -> x { -> g {
+      IF[IS_EMPTY[l]][
+        x
+      ][
+        -> y {
+          g[f[REST[l]][x][g]][FIRST[l]][y]
+        }
+      ]
+    } } }
+}]
+
+MAP =
+  -> k { -> f {
+    FOLD[k][EMPTY][
+      -> l { -> x { UNSHIFT[l][f[x]] } }
+    ]
+} }
