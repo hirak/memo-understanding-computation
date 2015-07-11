@@ -4,14 +4,15 @@ require './is_zero'
 require './pair'
 require './calc'
 require './list'
+require './string'
 
 MAP[RANGE[ONE][HUNDRED]][-> n {
   IF[IS_ZERO[MOD[n][FIFTEEN]]][
-    'FizzBuzz'
+    FIZZBUZZ
   ][IF[IS_ZERO[MOD[n][THREE]]][
-    'Fizz'
+    FIZZ
   ][IF[IS_ZERO[MOD[n][FIVE]]][
-    'Buzz'
+    BUZZ
   ][
     n.to_s
   ]]]
